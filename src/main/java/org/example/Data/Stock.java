@@ -1,62 +1,76 @@
 package org.example.Data;
 
+import com.google.gson.annotations.Expose;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class Stock {
-    private Map<ProduitElectro, Integer> produits;
+public class Stock implements Serializable {
+    @Expose private List<ProduitQuantite> produits;
 
     public Stock() {
-        produits = new HashMap<>();
+        produits = new ArrayList<>();
     }
 
-    // Ajouter un produit au stock
     public void ajouterProduit(ProduitElectro produit, int quantite) {
         produit.setStock(this); // Lien bidirectionnel
-        int ancienneQuantite = produits.getOrDefault(produit, 0);
-        produits.put(produit, ancienneQuantite + quantite);
+
+        for (ProduitQuantite pq : produits) {
+            if (pq.getProduit().equals(produit)) {
+                pq.setQuantite(pq.getQuantite() + quantite);
+                System.out.println(quantite + " unités de " + produit.getNom() + " ajoutées au stock.");
+                return;
+            }
+        }
+
+        produits.add(new ProduitQuantite(produit, quantite));
         System.out.println(quantite + " unités de " + produit.getNom() + " ajoutées au stock.");
     }
 
-    // Retirer un produit du stock par son nom
     public void retirerProduit(ProduitElectro produit) {
-        if (produits.containsKey(produit)) {
-            int quantite = produits.get(produit);
-            if (quantite > 0) {
-                produits.put(produit, 0);  // Retirer tout le stock du produit
-                System.out.println("Produit retiré du stock : " + produit.getNom());
-            } else {
-                System.out.println("Aucun stock disponible pour ce produit.");
+        for (ProduitQuantite pq : produits) {
+            if (pq.getProduit().equals(produit)) {
+                if (pq.getQuantite() > 0) {
+                    pq.setQuantite(0);
+                    System.out.println("Produit retiré du stock : " + produit.getNom());
+                } else {
+                    System.out.println("Aucun stock disponible pour ce produit.");
+                }
+                return;
             }
-        } else {
-            System.out.println("Produit non trouvé dans le stock.");
         }
+
+        System.out.println("Produit non trouvé dans le stock.");
     }
 
-
-    // Afficher le stock
     public void afficherStock() {
-        System.out.println("=== data.Stock actuel ===");
+        System.out.println("=== Stock actuel ===");
         if (produits.isEmpty()) {
             System.out.println("Aucun produit en stock.");
             return;
         }
-        for (Map.Entry<ProduitElectro, Integer> entry : produits.entrySet()) {
-            ProduitElectro p = entry.getKey();
-            int quantite = entry.getValue();
-            System.out.println(p.getNom() + " - " + quantite + " unités");
+
+        for (ProduitQuantite pq : produits) {
+            System.out.println(pq.getProduit().getNom() + " - " + pq.getQuantite() + " unités");
         }
     }
 
-    // Récupérer la quantité totale
-    public int getQuantiteTotale() {
-        return produits.values().stream().mapToInt(Integer::intValue).sum();
+    public Stock prepareForSerialization() {
+        Stock copy = new Stock();
+        for (ProduitQuantite pq : this.produits) {
+            ProduitElectro p = pq.getProduit();
+            p.setStock(null); // Rompre la référence circulaire
+            copy.ajouterProduit(p, pq.getQuantite());
+        }
+        return copy;
     }
 
-    public Map<ProduitElectro, Integer> getProduits() {
+    public int getQuantiteTotale() {
+        return produits.stream().mapToInt(ProduitQuantite::getQuantite).sum();
+    }
+
+    public List<ProduitQuantite> getProduits() {
         return produits;
     }
 }
-
