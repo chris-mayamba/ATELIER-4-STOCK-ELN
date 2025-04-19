@@ -1,4 +1,10 @@
 package org.example;
+<<<<<<< HEAD
+=======
+
+import org.example.Data.*;
+import org.example.Json.StockJsonRepository;
+>>>>>>> Json
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +15,11 @@ public class Main {
     public static void main(String[] args) {
         /*
         Scanner scanner = new Scanner(System.in);
-        Stock stock = new Stock();
+        StockJsonRepository repo = new StockJsonRepository("stock.json");
+
+        // Charger le stock depuis le fichier JSON
+        Stock stock = repo.load();
+
         boolean running = true;
 
         while (running) {
@@ -28,68 +38,41 @@ public class Main {
                     System.out.print("Nom du produit: ");
                     String nom = scanner.nextLine();
 
-                    // Création d'un produit en fonction du nom
                     ProduitElectro produitAjoute = null;
-                    System.out.print("Type du produit (1: Téléphone, 2: data.Ordinateur, 3: data.Accessoires): ");
+                    System.out.print("Type du produit (1: Téléphone, 2: Ordinateur, 3: Accessoires): ");
                     int typeProduit = scanner.nextInt();
                     scanner.nextLine(); // consommer retour chariot
 
+                    System.out.print("Fabricant: ");
+                    String fabricant = scanner.nextLine();
+                    System.out.print("Prix: ");
+                    long prix = scanner.nextLong();
+                    scanner.nextLine();
+                    System.out.print("RAM: ");
+                    String ram = scanner.nextLine();
+                    System.out.print("ROM: ");
+                    String rom = scanner.nextLine();
+                    System.out.print("OS: ");
+                    String os = scanner.nextLine();
+                    System.out.print("CPU: ");
+                    String cpu = scanner.nextLine();
+
                     if (typeProduit == 1) {
-                        // Création d'un téléphone
-                        System.out.print("Fabricant: ");
-                        String fabricant = scanner.nextLine();
-                        System.out.print("Prix: ");
-                        long prix = scanner.nextLong();
-                        scanner.nextLine();
-                        System.out.print("RAM: ");
-                        String ram = scanner.nextLine();
-                        System.out.print("ROM: ");
-                        String rom = scanner.nextLine();
-                        System.out.print("OS: ");
-                        String os = scanner.nextLine();
-                        System.out.print("CPU: ");
-                        String cpu = scanner.nextLine();
                         System.out.print("Double SIM (true/false): ");
                         boolean doubleSim = scanner.nextBoolean();
-                        scanner.nextLine(); // consommer retour chariot
+                        scanner.nextLine();
 
                         produitAjoute = new Telephone(0, nom, fabricant, prix, ram, rom, os, cpu, doubleSim);
+
                     } else if (typeProduit == 2) {
-                        // Création d'un ordinateur
-                        System.out.print("Fabricant: ");
-                        String fabricant = scanner.nextLine();
-                        System.out.print("Prix: ");
-                        long prix = scanner.nextLong();
-                        scanner.nextLine();
-                        System.out.print("RAM: ");
-                        String ram = scanner.nextLine();
-                        System.out.print("ROM: ");
-                        String rom = scanner.nextLine();
-                        System.out.print("OS: ");
-                        String os = scanner.nextLine();
-                        System.out.print("CPU: ");
-                        String cpu = scanner.nextLine();
                         System.out.print("GPU: ");
                         String gpu = scanner.nextLine();
-                        System.out.print("Type data.Ordinateur: ");
+                        System.out.print("Type Ordinateur: ");
                         String typeOrdinateur = scanner.nextLine();
 
                         produitAjoute = new Ordinateur(0, nom, fabricant, prix, ram, rom, os, cpu, gpu, typeOrdinateur);
+
                     } else if (typeProduit == 3) {
-                        // Création d'un accessoire
-                        System.out.print("Fabricant: ");
-                        String fabricant = scanner.nextLine();
-                        System.out.print("Prix: ");
-                        long prix = scanner.nextLong();
-                        scanner.nextLine();
-                        System.out.print("RAM: ");
-                        String ram = scanner.nextLine();
-                        System.out.print("ROM: ");
-                        String rom = scanner.nextLine();
-                        System.out.print("OS: ");
-                        String os = scanner.nextLine();
-                        System.out.print("CPU: ");
-                        String cpu = scanner.nextLine();
                         System.out.print("Type d'accessoire: ");
                         String typeAccessoires = scanner.nextLine();
 
@@ -99,32 +82,34 @@ public class Main {
                     if (produitAjoute != null) {
                         System.out.print("Quantité à ajouter: ");
                         int qteAjoute = scanner.nextInt();
-                        scanner.nextLine(); // consommer retour chariot
+                        scanner.nextLine();
 
                         stock.ajouterProduit(produitAjoute, qteAjoute);
+                        repo.save(stock);  // Sauvegarder après l'ajout
                     } else {
                         System.out.println("Type de produit invalide.");
                     }
+                    repo.save(stock);
                     break;
 
                 case 2:
                     System.out.print("Nom du produit à retirer: ");
                     String nomRetirer = scanner.nextLine();
 
-                    // Recherche du produit par nom dans le stock
-                    ProduitElectro produitRetire = stock.getProduits().keySet().stream()
+                    ProduitElectro produitRetire = stock.getProduits().stream()
+                            .map(ProduitQuantite::getProduit)
                             .filter(p -> p.getNom().equalsIgnoreCase(nomRetirer))
                             .findFirst()
                             .orElse(null);
 
                     if (produitRetire == null) {
                         System.out.println("Produit non trouvé dans le stock.");
-                        break;
+                    } else {
+                        stock.retirerProduit(produitRetire);
+                        repo.save(stock);  // Sauvegarder après le retrait
                     }
-
-                    stock.retirerProduit(produitRetire); // Retirer le produit en utilisant l'objet data.ProduitElectro
+                    repo.save(stock);
                     break;
-
 
                 case 3:
                     stock.afficherStock();
@@ -138,7 +123,7 @@ public class Main {
                     System.out.println("Choix invalide. Réessayer.");
             }
         }
-
+        repo.save(stock);
         System.out.println("Programme terminé.");
         scanner.close();
 

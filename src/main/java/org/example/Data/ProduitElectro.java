@@ -1,16 +1,19 @@
 package org.example.Data;
 
 
+import com.google.gson.annotations.Expose;
 
-public class ProduitElectro {
-    private int ID;
-    private String Nom;
-    private String Fabricant;
-    private long Prix;
-    private String Ram;
-    private String Rom;
-    private String OS;
-    private String CPU;
+import java.io.Serializable;
+
+public class ProduitElectro implements Serializable {
+    @Expose private int ID;
+    @Expose private String Nom;
+    @Expose private String Fabricant;
+    @Expose private long Prix;
+    @Expose private String Ram;
+    @Expose private String Rom;
+    @Expose private String OS;
+    @Expose private String CPU;
     private Stock stock ;
 
     public void setStock(Stock stock) {
