@@ -1,10 +1,13 @@
 package org.example;
-import org.example.Data.*;
 
-import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Main {
     public static void main(String[] args) {
+        /*
         Scanner scanner = new Scanner(System.in);
         Stock stock = new Stock();
         boolean running = true;
@@ -138,5 +141,15 @@ public class Main {
 
         System.out.println("Programme terminé.");
         scanner.close();
+
+         */
+
+
+
+
+
     }
+
+
+
 }
