@@ -1,25 +1,29 @@
 package org.example;
-<<<<<<< HEAD
-=======
 
 import org.example.Data.*;
 import org.example.Json.StockJsonRepository;
->>>>>>> Json
+import org.example.database.DatabaseManager;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        /*
+
         Scanner scanner = new Scanner(System.in);
         StockJsonRepository repo = new StockJsonRepository("stock.json");
 
         // Charger le stock depuis le fichier JSON
-        Stock stock = repo.load();
+        Stock stock1 = repo.load();
 
+        DatabaseManager dbManager = new DatabaseManager();
+
+        // Charger les produits depuis la base de données
+        Stock stock = new Stock();
+        List<ProduitElectro> produitsBDD = dbManager.lireTousProduits();
+        for (ProduitElectro p : produitsBDD) {
+            stock.ajouterProduit(p, 1); // Ajoute avec quantité 1 par défaut
+        }
         boolean running = true;
 
         while (running) {
@@ -41,7 +45,7 @@ public class Main {
                     ProduitElectro produitAjoute = null;
                     System.out.print("Type du produit (1: Téléphone, 2: Ordinateur, 3: Accessoires): ");
                     int typeProduit = scanner.nextInt();
-                    scanner.nextLine(); // consommer retour chariot
+                    scanner.nextLine();
 
                     System.out.print("Fabricant: ");
                     String fabricant = scanner.nextLine();
@@ -61,21 +65,18 @@ public class Main {
                         System.out.print("Double SIM (true/false): ");
                         boolean doubleSim = scanner.nextBoolean();
                         scanner.nextLine();
-
-                        produitAjoute = new Telephone(0, nom, fabricant, prix, ram, rom, os, cpu, doubleSim);
+                        produitAjoute = new Telephone(0, nom, fabricant, prix, ram, rom, os, cpu);
 
                     } else if (typeProduit == 2) {
                         System.out.print("GPU: ");
                         String gpu = scanner.nextLine();
                         System.out.print("Type Ordinateur: ");
                         String typeOrdinateur = scanner.nextLine();
-
                         produitAjoute = new Ordinateur(0, nom, fabricant, prix, ram, rom, os, cpu, gpu, typeOrdinateur);
 
                     } else if (typeProduit == 3) {
                         System.out.print("Type d'accessoire: ");
                         String typeAccessoires = scanner.nextLine();
-
                         produitAjoute = new Accessoires(0, nom, fabricant, prix, ram, rom, os, cpu, typeAccessoires);
                     }
 
@@ -83,13 +84,11 @@ public class Main {
                         System.out.print("Quantité à ajouter: ");
                         int qteAjoute = scanner.nextInt();
                         scanner.nextLine();
-
                         stock.ajouterProduit(produitAjoute, qteAjoute);
-                        repo.save(stock);  // Sauvegarder après l'ajout
+                        dbManager.ajouterProduit(produitAjoute, qteAjoute); // Enregistre dans la BDD
                     } else {
                         System.out.println("Type de produit invalide.");
                     }
-                    repo.save(stock);
                     break;
 
                 case 2:
@@ -106,13 +105,22 @@ public class Main {
                         System.out.println("Produit non trouvé dans le stock.");
                     } else {
                         stock.retirerProduit(produitRetire);
-                        repo.save(stock);  // Sauvegarder après le retrait
+                        dbManager.supprimerStock(produitRetire.getID());
+                        dbManager.supprimerProduit(produitRetire.getID());
                     }
-                    repo.save(stock);
                     break;
 
                 case 3:
                     stock.afficherStock();
+                    System.out.println("=== Stock actuel ===");
+                    List<ProduitQuantite> stockBDD = dbManager.lireStockComplet(); // méthode à créer
+                    if (stockBDD.isEmpty()) {
+                        System.out.println("Le stock est vide.");
+                    } else {
+                        for (ProduitQuantite pq : stockBDD) {
+                            System.out.println(pq.getProduit().getNom() + " - " + pq.getQuantite() + " unités");
+                        }
+                    }
                     break;
 
                 case 4:
@@ -123,18 +131,8 @@ public class Main {
                     System.out.println("Choix invalide. Réessayer.");
             }
         }
-        repo.save(stock);
+
         System.out.println("Programme terminé.");
         scanner.close();
-
-         */
-
-
-
-
-
     }
-
-
-
 }

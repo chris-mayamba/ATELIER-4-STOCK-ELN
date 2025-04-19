@@ -14,6 +14,7 @@ public class ProduitElectro implements Serializable {
     @Expose private String Rom;
     @Expose private String OS;
     @Expose private String CPU;
+    @Expose private String type;
     private Stock stock ;
 
     public void setStock(Stock stock) {
@@ -24,6 +25,13 @@ public class ProduitElectro implements Serializable {
         return stock;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
 
     public ProduitElectro() {
@@ -39,6 +47,22 @@ public class ProduitElectro implements Serializable {
         this.OS = OS;
         this.CPU = CPU;
     }
+
+    public ProduitElectro(int ID, String nom, String fabricant, long prix, String ram, String rom, String OS, String CPU, String type) {
+        this.ID = ID;
+        this.Nom = nom;
+        this.Fabricant = fabricant;
+        this.Prix = prix;
+        this.Ram = ram;
+        this.Rom = rom;
+        this.OS = OS;
+        this.CPU = CPU;
+        this.type = type;
+    }
+
+
+
+
 
     public int getID() {
         return ID;
@@ -105,7 +129,7 @@ public class ProduitElectro implements Serializable {
     }
     @Override
     public String toString() {
-        return "data.ProduitElectro{" +
+        return "ProduitElectro{" +
                 "ID=" + ID +
                 ", Nom='" + Nom + '\'' +
                 ", Fabricant='" + Fabricant + '\'' +
@@ -117,5 +141,8 @@ public class ProduitElectro implements Serializable {
                 ", stock=" + stock +
                 '}';
     }
+
+//    public String getType() {
+//    }
 }
 
