@@ -1,16 +1,20 @@
 package org.example.Data;
 
 
+import com.google.gson.annotations.Expose;
 
-public class ProduitElectro {
-    private int ID;
-    private String Nom;
-    private String Fabricant;
-    private long Prix;
-    private String Ram;
-    private String Rom;
-    private String OS;
-    private String CPU;
+import java.io.Serializable;
+
+public class ProduitElectro implements Serializable {
+    @Expose private int ID;
+    @Expose private String Nom;
+    @Expose private String Fabricant;
+    @Expose private long Prix;
+    @Expose private String Ram;
+    @Expose private String Rom;
+    @Expose private String OS;
+    @Expose private String CPU;
+    @Expose private String type;
     private Stock stock ;
 
     public void setStock(Stock stock) {
@@ -21,6 +25,13 @@ public class ProduitElectro {
         return stock;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
 
     public ProduitElectro() {
@@ -36,6 +47,22 @@ public class ProduitElectro {
         this.OS = OS;
         this.CPU = CPU;
     }
+
+    public ProduitElectro(int ID, String nom, String fabricant, long prix, String ram, String rom, String OS, String CPU, String type) {
+        this.ID = ID;
+        this.Nom = nom;
+        this.Fabricant = fabricant;
+        this.Prix = prix;
+        this.Ram = ram;
+        this.Rom = rom;
+        this.OS = OS;
+        this.CPU = CPU;
+        this.type = type;
+    }
+
+
+
+
 
     public int getID() {
         return ID;
@@ -102,7 +129,7 @@ public class ProduitElectro {
     }
     @Override
     public String toString() {
-        return "data.ProduitElectro{" +
+        return "ProduitElectro{" +
                 "ID=" + ID +
                 ", Nom='" + Nom + '\'' +
                 ", Fabricant='" + Fabricant + '\'' +
@@ -114,5 +141,8 @@ public class ProduitElectro {
                 ", stock=" + stock +
                 '}';
     }
+
+//    public String getType() {
+//    }
 }
 

@@ -10,6 +10,10 @@ public class Accessoires extends ProduitElectro {
         this.typeAccessoires = typeAccessoires;
     }
 
+    public Accessoires(int ID, String nom, String fabricant, long prix, String ram, String rom, String OS, String CPU) {
+        super(ID, nom, fabricant, prix, ram, rom, OS, CPU);
+    }
+
     public String getTypeAccessoires() {
         return typeAccessoires;
     }

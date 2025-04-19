@@ -1,0 +1,32 @@
+{
+  "produits": [
+    {
+      "produit": {
+        "type": "telephone",
+        "ID": 0,
+        "Nom": "samsung s25",
+        "Fabricant": "samsung",
+        "Prix": 2500,
+        "Ram": "16GB",
+        "Rom": "512GB",
+        "OS": "Android",
+        "CPU": "snapdragon"
+      },
+      "quantite": 5
+    },
+    {
+      "produit": {
+        "type": "telephone",
+        "ID": 0,
+        "Nom": "iPhone 16",
+        "Fabricant": "Apple",
+        "Prix": 2500,
+        "Ram": "16GB",
+        "Rom": "512GB",
+        "OS": "iOS",
+        "CPU": "A17"
+      },
+      "quantite": 5
+    }
+  ]
+}
