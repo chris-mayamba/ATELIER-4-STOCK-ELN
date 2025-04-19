@@ -188,6 +188,10 @@ public class DatabaseManager {
                 String type = rs.getString("type");
                 int quantite = rs.getInt("quantite");
 
+                if (type == null){
+                    type = "";
+                }
+
                 ProduitElectro produit = null;
                 switch (type.toLowerCase()) {
                     case "telephone":
@@ -195,12 +199,16 @@ public class DatabaseManager {
                         break;
                     case "ordinateur":
                         String gpu = rs.getString("gpu");
-                        String typeOrdinateur = rs.getString("typeOrdinateur");
+                        String typeOrdinateur = rs.getString("type"); // Récupère la colonne 'type'
+                        if (typeOrdinateur == null) typeOrdinateur = "";
+
                         produit = new Ordinateur(id, nom, fabricant, prix, ram, rom, os, cpu, gpu, typeOrdinateur);
                         break;
                     case "accessoires":
-                        //String typeAccessoire = rs.getString("typeAccessoires");
-                        produit = new Accessoires(id, nom, fabricant, prix, ram, rom, os, cpu);
+                        String typeAccessoires = rs.getString("type");
+                        if (typeAccessoires == null) typeAccessoires = "";
+
+                        produit = new Accessoires(id, nom, fabricant, prix, ram, rom, os, cpu, typeAccessoires);
                         break;
                 }
 

@@ -111,14 +111,40 @@ public class Main {
                     break;
 
                 case 3:
-                    stock.afficherStock();
-                    System.out.println("=== Stock actuel ===");
+                    //stock.afficherStock();
+
+                    System.out.println("=== Stock actuel MYSQL ===");
                     List<ProduitQuantite> stockBDD = dbManager.lireStockComplet(); // méthode à créer
                     if (stockBDD.isEmpty()) {
                         System.out.println("Le stock est vide.");
                     } else {
                         for (ProduitQuantite pq : stockBDD) {
-                            System.out.println(pq.getProduit().getNom() + " - " + pq.getQuantite() + " unités");
+                            ProduitElectro produit = pq.getProduit();
+                            System.out.println("Nom: " + produit.getNom());
+                            System.out.println("Fabricant: " + produit.getFabricant());
+                            System.out.println("Prix: " + produit.getPrix() + "€");
+                            System.out.println("RAM: " + produit.getRam());
+                            System.out.println("ROM: " + produit.getRom());
+                            System.out.println("OS: " + produit.getOS());
+                            System.out.println("CPU: " + produit.getCPU());
+                            System.out.println("Type: " + produit.getType());
+
+                            // Si c'est un ordinateur, afficher les informations spécifiques comme le GPU et le type d'ordinateur
+                            if (produit instanceof Ordinateur) {
+                                Ordinateur ordinateur = (Ordinateur) produit;
+                                System.out.println("GPU: " + ordinateur.getGPU());
+                                System.out.println("Type d'ordinateur: " + ordinateur.getTypeOrdinateur());
+                            }
+
+                            // Si c'est un accessoire, afficher les informations spécifiques comme le type d'accessoire
+                            if (produit instanceof Accessoires) {
+                                Accessoires accessoire = (Accessoires) produit;
+                                System.out.println("Type d'accessoire: " + accessoire.getTypeAccessoires());
+                            }
+
+                            // Afficher la quantité en stock
+                            System.out.println("Quantité en stock: " + pq.getQuantite() + " unités");
+                            System.out.println("====================================");
                         }
                     }
                     break;
