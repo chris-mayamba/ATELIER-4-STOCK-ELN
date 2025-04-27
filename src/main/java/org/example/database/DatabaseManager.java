@@ -6,7 +6,23 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseManager {
+public class DatabaseManager implements IConnectionProvider{
+    private IDatabaseConfig config;
+
+    public DatabaseManager(IDatabaseConfig config){
+        this.config = config;
+    }
+
+    @Override
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(
+                config.getUrl(),
+                config.getUsername(),
+                config.getPassword()
+        );
+    }
+
+    /*
     private static final String URL = "jdbc:mysql://localhost/produitstock";
     private static final String USER = "root";
     private static final String PASSWORD = "";
@@ -222,7 +238,7 @@ public class DatabaseManager {
         }
 
         return liste;
-    }
+    } */
 
 }
 
