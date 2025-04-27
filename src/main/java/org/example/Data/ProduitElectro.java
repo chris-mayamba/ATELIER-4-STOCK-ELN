@@ -6,16 +6,27 @@ import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 
 public class ProduitElectro implements Serializable {
-    @Expose private int ID;
-    @Expose private String Nom;
-    @Expose private String Fabricant;
-    @Expose private long Prix;
-    @Expose private String Ram;
-    @Expose private String Rom;
-    @Expose private String OS;
-    @Expose private String CPU;
-    @Expose private String type;
-    private Stock stock ;
+    @Expose
+    private int ID;
+    @Expose
+    private String Nom;
+    @Expose
+    private String Fabricant;
+    @Expose
+    private double Prix;
+    @Expose
+    private String Ram;
+    @Expose
+    private String Rom;
+    @Expose
+    private String OS;
+    @Expose
+    private String CPU;
+    @Expose
+    private String type;
+    @Expose
+    private String GPU;
+    private Stock stock;
 
     public void setStock(Stock stock) {
         this.stock = stock;
@@ -61,9 +72,6 @@ public class ProduitElectro implements Serializable {
     }
 
 
-
-
-
     public int getID() {
         return ID;
     }
@@ -88,11 +96,11 @@ public class ProduitElectro implements Serializable {
         this.Fabricant = fabricant;
     }
 
-    public long getPrix() {
+    public double getPrix() {
         return Prix;
     }
 
-    public void setPrix(long prix) {
+    public void setPrix(double prix) {
         this.Prix = prix;
     }
 
@@ -127,6 +135,7 @@ public class ProduitElectro implements Serializable {
     public void setCPU(String CPU) {
         this.CPU = CPU;
     }
+
     @Override
     public String toString() {
         return "ProduitElectro{" +
@@ -137,12 +146,18 @@ public class ProduitElectro implements Serializable {
                 ", Ram='" + Ram + '\'' +
                 ", Rom='" + Rom + '\'' +
                 ", OS='" + OS + '\'' +
+                ", GPU='" + GPU + '\'' +
                 ", CPU='" + CPU + '\'' +
                 ", stock=" + stock +
                 '}';
     }
 
-//    public String getType() {
-//    }
+    public String getGPU() {
+        return GPU;
+    }
+
+    public void setGPU(String GPU) {
+        this.GPU = GPU;
+    }
 }
 
