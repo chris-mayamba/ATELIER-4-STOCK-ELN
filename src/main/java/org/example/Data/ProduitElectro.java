@@ -28,6 +28,17 @@ public class ProduitElectro implements Serializable {
     private String GPU;
     private Stock stock;
 
+    private int quantite;
+
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+    }
+
+
     public void setStock(Stock stock) {
         this.stock = stock;
     }
